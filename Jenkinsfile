@@ -43,7 +43,7 @@ pipeline {
         }
         stage('Send Notification') {
             steps {
-                sh "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Климачев Сергей собрал приложение.\"}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage" 
+                sh "curl -X POST -H 'Content-type: application/json' --data '{"chat_id": "-1001823350512", "text": "Климачев Сергей cобрал приложение"}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage" 
             }
         }
 
