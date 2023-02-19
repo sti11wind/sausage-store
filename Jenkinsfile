@@ -41,7 +41,6 @@ pipeline {
                 archiveArtifacts(artifacts: 'frontend/dist/frontend/*')
             }
         }
-    }
         stage('Send Notification') {
             steps {
                 sh "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Климачев Сергей собрал приложение.\"}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage" 
@@ -49,3 +48,5 @@ pipeline {
         }
 
     }
+}
+
