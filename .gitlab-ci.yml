@@ -3,7 +3,9 @@ stages:
   - notify
 
 build-backend-code-job:
-  stage: build  
+  stage: build
+  variables:
+    BACKEND_JOB: ${CI_JOB_ID}  
   only:
     changes:
     - backend/*
@@ -20,12 +22,14 @@ telegram-notification-backend:
     changes:
     - backend/*
   script:
-    - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал backend Скачать backend можно по ссылке — '"$SHOP_URL/-/jobs/${CI_JOB_ID}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
+    - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал backend Скачать backend можно по ссылке — '"$SHOP_URL/-/jobs/${BACKEND_JOB}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
   needs:
     - build-backend-code-job
 
 build-frontend-code-job:
   stage: build  
+  variables:
+    FRONTED_JOB: ${CI_JOB_ID}
   only:
     changes:
     - frontend/*
@@ -39,9 +43,6 @@ build-frontend-code-job:
 
 telegram-notification-frontend:
   stage: notify
-  variables:
-   FRONTED_JOB: ${CI_JOB_ID}
-
   only:
     changes:
     - frontend/*
