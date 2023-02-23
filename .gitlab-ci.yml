@@ -31,8 +31,6 @@ telegram-notification-backend:
 
 build-frontend-code-job:
   stage: build  
-  variables:
-    PREVIOUS_JOB: ${CI_JOB_ID}
   only:
     changes:
     - frontend/*
@@ -40,6 +38,7 @@ build-frontend-code-job:
     - cd frontend
     - npm install
     - npm run build
+    - PREVIOUS_JOB=${CI_JOB_ID}
   artifacts:
     paths:
       - frontend/dist/frontend 
