@@ -1,4 +1,3 @@
-
 stages:
   - build
   - notify
@@ -36,18 +35,18 @@ build-frontend-code-job:
     - cd frontend
     - npm install
     - npm run build
+    - echo ${CI_JOB_ID} > exit_code.txt
   artifacts:
     paths:
       - frontend/dist/frontend 
 
 telegram-notification-frontend:
-  stage: notify
-  variables:
-    PREVIOUS_JOB: ${CI_JOB_ID} - 1 
+  stage: notify 
   only:
     changes:
     - frontend/*
   script:
+    - PREVIOUS_JOB=$(cat exit_code.txt)
     - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал frontend Скачать frontend можно по ссылке — '"$SHOP_URL/-/jobs/${PREVIOUS_JOB}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage  
   needs:
     - build-frontend-code-job 
