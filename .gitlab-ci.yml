@@ -1,5 +1,5 @@
 variables:
-   PREVIOUS_JOB: 0
+   PREVIOUS_JOB: ${CI_PIPELINE_ID}
 
 stages:
   - build
