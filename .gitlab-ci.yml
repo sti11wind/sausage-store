@@ -1,5 +1,3 @@
-variables:
-   PREVIOUS_JOB: ${CI_PIPELINE_ID}
 
 stages:
   - build
@@ -7,8 +5,6 @@ stages:
 
 build-backend-code-job:
   stage: build
-  variables:
-    PREVIOUS_JOB: ${CI_JOB_ID}  
   only:
     changes:
     - backend/*
@@ -21,6 +17,8 @@ build-backend-code-job:
 
 telegram-notification-backend:
   stage: notify
+  variables:
+    PREVIOUS_JOB: ${CI_JOB_ID} - 1 
   only:
     changes:
     - backend/*
@@ -38,13 +36,14 @@ build-frontend-code-job:
     - cd frontend
     - npm install
     - npm run build
-    - PREVIOUS_JOB=${CI_JOB_ID}
   artifacts:
     paths:
       - frontend/dist/frontend 
 
 telegram-notification-frontend:
   stage: notify
+  variables:
+    PREVIOUS_JOB: ${CI_JOB_ID} - 1 
   only:
     changes:
     - frontend/*
