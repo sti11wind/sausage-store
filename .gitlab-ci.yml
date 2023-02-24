@@ -37,9 +37,8 @@ build-frontend-code-job:
     - npm run build
     - echo "PREVIOUS_JOB=${CI_JOB_ID}" >> build.env
   artifacts:
-    reports:
-      dotenv: build.env
     paths:
+      - frontend/build.env
       - frontend/dist/frontend 
 
 telegram-notification-frontend:
@@ -50,7 +49,7 @@ telegram-notification-frontend:
     changes:
     - frontend/*
   script:
-    - echo "PREVIOUS_JOB" << build.env
+    - echo "PREVIOUS_JOB" << frontend/build.env
     - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал frontend Скачать frontend можно по ссылке — '"$SHOP_URL/-/jobs/${PREVIOUS_JOB}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage  
   needs:
     - build-frontend-code-job 
