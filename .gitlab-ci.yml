@@ -10,7 +10,10 @@ build-backend-code-job:
   script:
     - cd backend
     - mvn package
+    - echo "JOB_ID=$CI_JOB_ID" >> job.env
   artifacts:
+    reports:
+      dotenv: job.env
     paths:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
 
@@ -22,14 +25,14 @@ telegram-notification-backend:
     changes:
     - backend/*
   script:
+    - echo $JOB_ID
     - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал backend Скачать backend можно по ссылке — '"$SHOP_URL/-/jobs/${PREVIOUS_JOB}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
   needs:
     - build-backend-code-job
 
 build-frontend-code-job:
   stage: build
-  variables:
-    PREVIOUS_JOB: ${CI_JOB_ID}  
+  variables:  
   only:
     changes:
     - frontend/*
@@ -37,9 +40,7 @@ build-frontend-code-job:
     - cd frontend
     - npm install
     - npm run build
-    - echo  $PREVIOUS_JOB >> build.env
-    - echo  frontend/build.env
-    - echo  $PREVIOUS_JOB
+    - echo "PREVIOUS_JOB=$CI_JOB_ID” >> build.env
   artifacts:
     paths:
       - frontend/build.env
@@ -55,8 +56,8 @@ telegram-notification-frontend:
     changes:
     - frontend/*
   script:
-    - echo  frontend/build.env
-    - echo  frontend/build.env >> $PREVIOUS_JOB
+    - echo  "frontend/build.env"
+    - echo  "frontend/build.env >> $PREVIOUS_JOB
     - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал frontend Скачать frontend можно по ссылке — '"$SHOP_URL/-/jobs/${PREVIOUS_JOB}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage  
   needs:
     - build-frontend-code-job 
