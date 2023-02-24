@@ -13,8 +13,9 @@ build-backend-code-job:
     - echo "JOB_ID=$CI_JOB_ID" >> job.env
   artifacts:
     reports:
-      dotenv: job.env
+      dotenv: backend/job.env
     paths:
+      - backend/job.env
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
 
 telegram-notification-backend:
