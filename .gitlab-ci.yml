@@ -1,0 +1,61 @@
+stages:
+  - build
+  - notify
+
+build-backend-code-job:
+  stage: build
+  only:
+    changes:
+    - backend/*
+  script:
+    - cd backend
+    - mvn package
+    - echo "JOB_ID=$CI_JOB_ID" >> job.env
+  artifacts:
+    reports:
+      dotenv: backend/job.env
+    paths:
+      - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
+
+telegram-notification-backend:
+  stage: notify
+  dependencies:
+    - build-backend-code-job 
+  only:
+    changes:
+    - backend/*
+  script:
+    - echo $JOB_ID
+    - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал backend Скачать backend можно по ссылке — '"$SHOP_URL/-/jobs/${JOB_ID}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
+  needs:
+    - build-backend-code-job
+
+build-frontend-code-job:
+  stage: build
+  variables:  
+  only:
+    changes:
+    - frontend/*
+  script:        
+    - cd frontend
+    - npm install
+    - npm run build
+    - echo "JOB_ID=$CI_JOB_ID" >> job.env
+  artifacts:
+    reports:
+      dotenv: frontend/job.env
+    paths:
+      - frontend/dist/frontend 
+
+telegram-notification-frontend:
+  needs:
+    - build-frontend-code-job
+  stage: notify
+  only:
+    changes:
+    - frontend/*
+  script:
+    - echo $JOB_ID
+    - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал frontend Скачать frontend можно по ссылке — '"$SHOP_URL/-/jobs/$JOB_ID/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage  
+  needs:
+    - build-frontend-code-job 
