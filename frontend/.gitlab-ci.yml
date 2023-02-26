@@ -27,10 +27,11 @@ build-frontend-code-job:
 sonarqube-frontend-sast:
   stage: sonar
   image: 
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
   script:
     - cd frontend
     - >
-      mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
       -Dsonar.projectKey=${SONAR_F_PROJECT_KEY}
       -Dsonar.host.url=${SONAR_HOST_URL}
       -Dsonar.login=${SONAR_F_LOGIN} 
