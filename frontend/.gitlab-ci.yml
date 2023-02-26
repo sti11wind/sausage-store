@@ -24,7 +24,7 @@ build-frontend-code-job:
       - frontend/dist/frontend 
 
 
-sonarqube-frontend-sast:
+sonarqube:
   stage: sonar
   image: 
     name: sonarsource/sonar-scanner-cli:latest
@@ -37,7 +37,7 @@ sonarqube-frontend-sast:
       -Dsonar.login=${SONAR_F_LOGIN} 
 
 
-telegram-notification-frontend:
+telegram-notification:
   needs:
     - build-frontend-code-job
   stage: notify
