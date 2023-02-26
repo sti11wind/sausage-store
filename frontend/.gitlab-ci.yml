@@ -26,9 +26,7 @@ build-frontend-code-job:
 
 sonarqube:
   stage: sonar
-  image: 
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [""]
+  image: sonarsource/sonar-scanner-cli
   script:
     - cd frontend
     - >
