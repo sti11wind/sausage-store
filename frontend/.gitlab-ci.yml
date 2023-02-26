@@ -1,6 +1,6 @@
 stages:
   - build
-
+  - sonar
   - notify
 
 
@@ -25,7 +25,7 @@ build-frontend-code-job:
 
 
 sonarqube-frontend-sast:
-  stage: test
+  stage: sonar
   image: 
   script:
     - cd frontend
