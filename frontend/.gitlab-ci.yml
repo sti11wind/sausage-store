@@ -35,7 +35,7 @@ sonarqube:
       -Dsonar.sources=.
       -Dsonar.host.url=${SONAR_HOST_URL}
       -Dsonar.login=${SONAR_B_LOGIN} 
-      -Dsonar.projectName=[14_SERGEYKLIMACHEV_BACKEND]
+      -Dsonar.projectName=14_SERGEYKLIMACHEV_BACKEND
 
 
 
