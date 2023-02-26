@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
   - sonar
   - notify
 
@@ -19,6 +20,7 @@ spotbugs-sast:
 
 build-backend-code-job:
   stage: build
+  when: manual
   only:
     changes:
     - backend/*
