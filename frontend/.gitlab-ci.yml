@@ -23,6 +23,19 @@ build-frontend-code-job:
     paths:
       - frontend/dist/frontend 
 
+
+sonarqube-frontend-sast:
+  stage: test
+  image: 
+  script:
+    - cd frontend
+    - >
+      mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=${SONAR_F_PROJECT_KEY}
+      -Dsonar.host.url=${SONAR_HOST_URL}
+      -Dsonar.login=${SONAR_F_LOGIN} 
+
+
 telegram-notification-frontend:
   needs:
     - build-frontend-code-job
