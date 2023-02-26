@@ -37,7 +37,7 @@ build-backend-code-job:
 
 sonarqube-backend-sast:
   stage: sonar
-  image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
+  image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в  будущем
   script:
     - cd backend
     - >
