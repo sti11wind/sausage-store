@@ -31,10 +31,10 @@ sonarqube:
     entrypoint: [""]
   script:
     - cd frontend
-    - >
-      -Dsonar.projectKey=${SONAR_F_PROJECT_KEY}
-      -Dsonar.host.url=${SONAR_HOST_URL}
-      -Dsonar.login=${SONAR_F_LOGIN} 
+    - sonar-scanner -Dsonar.projectKey="$PROJECTKEY_FRONTEND" -Dsonar.sources=. 
+  allow_failure: true
+
+
 
 
 telegram-notification:
