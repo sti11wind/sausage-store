@@ -44,6 +44,7 @@ sonarqube-backend-sast:
       -Dsonar.projectKey=${SONAR_B_PROJECT_KEY}
       -Dsonar.host.url=${SONAR_HOST_URL}
       -Dsonar.login=${SONAR_B_LOGIN} 
+      -Dsonar.projectname="14_SERGEYKLIMACHEV_BACKEND"
 
 
 telegram-notification-backend:
