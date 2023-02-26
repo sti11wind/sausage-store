@@ -7,7 +7,7 @@ stages:
 
     
 build-frontend-code-job:
-  stage: build #
+  stage: build ##
   variables:  
   only:
     changes:
