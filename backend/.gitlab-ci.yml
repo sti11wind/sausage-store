@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  
+  - sonar
   - notify
 
   
@@ -34,6 +34,17 @@ build-backend-code-job:
    #   - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
     paths:
       - ${CI_PROJECT_DIR}/.m2/
+
+sonarqube-backend-sast:
+  stage: sonar
+  image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
+  script:
+    - cd backend
+    - >
+      mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=${SONAR_B_PROJECT_KEY}
+      -Dsonar.host.url=${SONAR_HOST_URL}
+      -Dsonar.login=${SONAR_B_LOGIN} 
 
 
 telegram-notification-backend:
