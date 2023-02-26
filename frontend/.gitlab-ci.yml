@@ -33,10 +33,12 @@ sonarqube:
     - cd frontend
     - >
       -Dsonar.projectKey=${SONAR_B_PROJECT_KEY}
+      -Dsonar.sources=.
       -Dsonar.host.url=${SONAR_HOST_URL}
       -Dsonar.login=${SONAR_B_LOGIN} 
     - sonar-scanner -Dsonar.projectKey="$PROJECTKEY_FRONTEND" -Dsonar.sources=. 
   allow_failure: true
+
 
 
 
