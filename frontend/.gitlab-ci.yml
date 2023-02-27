@@ -9,12 +9,6 @@ include:
   - template: Security/SAST.gitlab-ci.yml 
 
 
-spotbugs-sast:
-  stage: test
-  variables:
-    COMPILE: "false"
-    SAST_JAVA_VERSION: 11
-
 
 
 
