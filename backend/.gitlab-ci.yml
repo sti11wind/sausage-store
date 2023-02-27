@@ -1,0 +1,62 @@
+stages:
+  - build
+  - test
+  - sonar
+  - notify
+
+  
+include:
+  - template: Security/SAST.gitlab-ci.yml 
+
+spotbugs-sast:
+  stage: test
+  variables:
+    COMPILE: "false"
+    SAST_JAVA_VERSION: 11
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository # не забудьте при сборке также указывать эту папку через аргумент -Dmaven.repo.local 
+
+
+
+
+build-backend-code-job:
+  stage: build
+  only:
+    changes:
+    - backend/*
+  script:
+    - cd backend
+    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository
+    - echo "JOB_ID=$CI_JOB_ID" >> job.env
+  artifacts:
+    reports:
+      dotenv: backend/job.env
+    paths:
+      - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
+      - ${CI_PROJECT_DIR}/.m2/
+
+sonarqube-backend-sast:
+  stage: sonar
+  image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в  будущем
+  script:
+    - cd backend
+    - >
+      mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=${SONAR_B_PROJECT_KEY}
+      -Dsonar.host.url=${SONAR_HOST_URL}
+      -Dsonar.login=${SONAR_B_LOGIN} 
+      -Dsonar.projectname=14_SERGEYKLIMACHEV_BACKEND
+
+
+telegram-notification-backend:
+  stage: notify
+  dependencies:
+    - build-backend-code-job 
+  only:
+    changes:
+    - backend/*
+  script:
+    - echo $JOB_ID
+    - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Климачев Сергей cобрал backend Скачать backend можно по ссылке — '"$SHOP_URL/-/jobs/${JOB_ID}/artifacts/download?file_type=archive"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
+  needs:
+    - build-backend-code-job
+
