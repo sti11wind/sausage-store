@@ -9,6 +9,15 @@ include:
   - template: Security/SAST.gitlab-ci.yml 
 
 
+spotbugs-sast:
+  stage: test
+  variables:
+    COMPILE: "false"
+    SAST_JAVA_VERSION: 11
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+
+
+
 
 
     
