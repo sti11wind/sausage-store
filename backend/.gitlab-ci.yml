@@ -30,10 +30,7 @@ build-backend-code-job:
   script:
     - cd backend
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
-    - echo "JOB_ID=$CI_JOB_ID" >> job.env
   artifacts:
-    reports:
-      dotenv: backend/job.env
     paths:
       - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2/ 
