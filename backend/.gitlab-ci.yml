@@ -29,7 +29,7 @@ build-backend-code-job:
     - backend/*
   script:
     - cd backend
-    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Dversion.application=${VERSION}
+    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
     - echo "JOB_ID=$CI_JOB_ID" >> job.env
   artifacts:
     reports:
