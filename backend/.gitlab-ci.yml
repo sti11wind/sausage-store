@@ -41,12 +41,13 @@ build-backend-code-job:
     changes:
     - backend/*
   script:
-    - cd backend
-    - mvn package -Dversion.application=${VERSION} -Dmaven.repo.local=${MAVEN_REPO_PATH} 
+      - cd backend
+      - mvn package -Dversion.application=${VERSION} -Dmaven.repo.local=${MAVEN_REPO_PATH}
+ 
   artifacts:
     paths:
-      - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2/ 
+      - sausage-store-${VERSION}/sausage-store-${VERSION}.jar
 
 release:
    stage: release
