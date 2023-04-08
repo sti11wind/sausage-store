@@ -72,7 +72,7 @@ telegram-notification-backend:
     - build-backend-code-job
 cache:
   paths:
-    - ${CI_PROJECT_DIR}/.m2/repository #  для хранения зависимостей бэкенда
+    - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимостей бэкенда
 
 deploy:
   stage: deploy
