@@ -35,19 +35,15 @@ spotbugs-sast:
 
 
 
-build-backend-code-job:
-  stage: build
-  only:
-    changes:
-    - backend/*
-  script:
+build:
+   stage: build
+   script:
       - cd backend
       - mvn package -Dversion.application=${VERSION} -Dmaven.repo.local=${MAVEN_REPO_PATH}
- 
-  artifacts:
-    paths:
-      - ${CI_PROJECT_DIR}/.m2/ 
-      - sausage-store-${VERSION}/sausage-store-${VERSION}.jar
+   rules: # rules и only в данных случаях взаимозаменяемы
+      - changes:
+           - backend/**/*
+
 
 release:
    stage: release
