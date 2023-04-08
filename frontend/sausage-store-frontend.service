@@ -1,12 +1,15 @@
 [Unit]
-User=student
 Description=Sausage Store  Frontend
 After=syslog.target
 After=network.target
 
 [Service]
+Environment="LOGGING_LEVEL_ROOT=INFO"
 Type=simple
-ExecStart=/usr/bin/sudo  /usr/bin/http-server -p 80 --proxy http://localhost:8080 /var/www-data/
+User=front-user
+StandardOutput=file:/logs/out-front.log
+WorkingDirectory=/var/www-data
+ExecStart=/usr/bin/http-server -p 80 --proxy http://localhost:8080 dist/frontend/
 Restart=always
 RestartSec=10
 StartLimitInterval=0
