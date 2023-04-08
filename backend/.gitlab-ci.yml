@@ -18,6 +18,7 @@ stages:
   - test
   - sonar
   - notify
+  - release
   - deploy
 
   
@@ -41,11 +42,20 @@ build-backend-code-job:
     - backend/*
   script:
     - cd backend
-    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
+    - mvn package -Dversion.application=${VERSION} -Dmaven.repo.local=${MAVEN_REPO_PATH} 
   artifacts:
     paths:
       - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2/ 
+
+release:
+   stage: release
+   script:
+      - cd backend
+      - mvn deploy -DskipTests -Dversion.application=${VERSION} -Dmaven.repo.local=${MAVEN_REPO_PATH} -s settings.xml
+   rules:
+      - changes:
+           - backend/**/* 
 
 sonarqube-backend-sast:
   stage: sonar
