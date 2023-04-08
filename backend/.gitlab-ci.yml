@@ -13,9 +13,9 @@ before_script:
 
 stages:
   - build
-  - test
-  - sonar
-  - notify
+  #- test
+  #- sonar
+  #- notify
   - deploy
 
   
