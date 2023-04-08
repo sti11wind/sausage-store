@@ -8,10 +8,22 @@ variables:
 
 stages:
   - build
+  - test
+  - sonar
   - release
   - deploy
 
 
+
+include:
+  - template: Security/SAST.gitlab-ci.yml 
+
+spotbugs-sast:
+  stage: test
+  variables:
+    COMPILE: "false"
+    SAST_JAVA_VERSION: 11
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository # не забудьте при сборке также указывать эту папку через аргумент -Dmaven.repo.local 
 
 
 
@@ -31,7 +43,17 @@ build:
       - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2/ 
 
-
+sonarqube-backend-sast:
+  stage: sonar
+  image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в  будущем
+  script:
+    - cd backend
+    - >
+      mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=${SONAR_B_PROJECT_KEY}
+      -Dsonar.host.url=${SONAR_HOST_URL}
+      -Dsonar.login=${SONAR_B_LOGIN} 
+      -Dsonar.projectname=14_SERGEYKLIMACHEV_BACKEND
 
 release:
    stage: release
