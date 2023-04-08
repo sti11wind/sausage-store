@@ -46,6 +46,7 @@ build:
    artifacts:
     paths:
       - ${CI_PROJECT_DIR}/.m2/ 
+      - sausage-store-${VERSION}/sausage-store-${VERSION}.jar
 
 
 
