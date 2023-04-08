@@ -43,6 +43,10 @@ build:
    rules: # rules и only в данных случаях взаимозаменяемы
       - changes:
            - backend/**/*
+   artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/.m2/ 
+
 
 
 release:
