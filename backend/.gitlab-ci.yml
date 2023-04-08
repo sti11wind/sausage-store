@@ -84,6 +84,6 @@ deploy:
      - ssh ${DEV_USER}@${DEV_HOST}
   # скачиваем ранее собранный артефакт с Nexus. При этом необходимо заранее
   # прописать креды от Nexus в переменные в настройке пайплайна
-    - curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-${VERSION}.jar $NEXUS_REPO_URL/sausage-store-klimachev-sergey-backend/com/yandex/practicum/devops/sausage-store/$VERSION/sausage-store-$VERSION.jar
+     - curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-${VERSION}.jar $NEXUS_REPO_URL/sausage-store-klimachev-sergey-backend/com/yandex/practicum/devops/sausage-store/$VERSION/sausage-store-$VERSION.jar
  # запускаем бэкенд  
-    - java -jar sausage-store-${VERSION}.jar & 
+     - java -jar sausage-store-${VERSION}.jar & 
