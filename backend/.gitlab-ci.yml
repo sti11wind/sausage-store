@@ -83,9 +83,9 @@ telegram-notification-backend:
     - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Вышла новая версия сосисочной — '"$VERSION"' Скачать бэкенд можно по ссылке — '"$NEXUS_REPO_URL/sausage-store-klimachev-sergey-backend/com/yandex/practicum/devops/sausage-store/$VERSION/sausage-store-$VERSION.jar"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
   needs:
     - build-backend-code-job
-cache:
-  paths:
-    - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимостей бэкенда
+  cache:
+    paths:
+      - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимостей бэкенда
 
 deploy:
   stage: deploy
