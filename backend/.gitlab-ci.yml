@@ -10,7 +10,6 @@ stages:
   - build
   - test
   - sonar
-  - notify
   - release
   - deploy
 
@@ -48,6 +47,7 @@ release:
    script:
       - cd backend
       - mvn deploy -DskipTests -Dversion.application=${VERSION} -Dmaven.repo.local=${MAVEN_REPO_PATH} -s settings.xml
+      - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Вышла новая версия сосисочной — '"$VERSION"' Скачать бэкенд можно по ссылке — '"$NEXUS_REPO_URL/sausage-store-klimachev-sergey-backend/com/yandex/practicum/devops/sausage-store/$VERSION/sausage-store-$VERSION.jar"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
    rules:
       - changes:
            - backend/**/* 
@@ -65,13 +65,6 @@ sonarqube-backend-sast:
       -Dsonar.projectname=14_SERGEYKLIMACHEV_BACKEND
 
 
-telegram-notification-backend:
-  stage: notify
-  only:
-    changes:
-    - backend/*
-  script:
-    - curl -X POST -H 'Content-type:application/json' --data '{"chat_id":"-1001823350512", "text":"Вышла новая версия сосисочной — '"$VERSION"' Скачать бэкенд можно по ссылке — '"$NEXUS_REPO_URL/sausage-store-klimachev-sergey-backend/com/yandex/practicum/devops/sausage-store/$VERSION/sausage-store-$VERSION.jar"' "}' https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage 
 
 
 deploy:
