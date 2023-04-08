@@ -1,0 +1,15 @@
+[Unit]
+User=student
+Description=Sausage Store  Frontend
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sudo  /usr/bin/http-server -p 80 --proxy http://localhost:8080 /var/www-data/
+Restart=always
+RestartSec=10
+StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target
