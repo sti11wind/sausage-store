@@ -31,6 +31,7 @@ build-frontend-code-job:
     - cd frontend
     - npm install
     - npm run build
+    - cd ..
     - mkdir sausage-store-${VERSION}
     - mv frontend/dist/frontend sausage-store-${VERSION}/public_html
 
