@@ -12,7 +12,7 @@ curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store.tar.gz ${NEXUS_RE
 tar xvf sausage-store.tar.gz
 sudo cp ./sausage-store-${VERSION}/public_html/* /var/www-data/dist/frontend/ ||true
 sudo npm install -g http-server
-sudo setcap 'cap_net_bind_service=+ep' /usr/bin/http-server
+sudo setcap 'cap_net_bind_service=+ep' `which node`
 #Обновляем конфиг systemd с помощью рестарта
 sudo systemctl daemon-reload
 #Перезапускаем сервис сосисочной
