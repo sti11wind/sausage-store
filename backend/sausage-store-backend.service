@@ -3,6 +3,7 @@ Description=Sausage-store
 
 [Service]
 User=jarservice
+Environment="LOGGING_LEVEL_ROOT=DEBUG"
 Environment=REPORT_PATH=/logs/reports
 Environment=LOG_PATH=/logs
 StandardOutput=file:/opt/log/sausage-store-backend.log
