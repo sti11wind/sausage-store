@@ -42,6 +42,10 @@ build:
     paths:
       - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2/ 
+    cache:
+      paths:
+        - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимостей бэкенда
+
 
 sonarqube-backend-sast:
   stage: sonar
