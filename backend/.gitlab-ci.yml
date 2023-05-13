@@ -41,10 +41,8 @@ build:
   artifacts:
     paths:
       - backend/target/sausage-store-${VERSION}.jar
-      - ${CI_PROJECT_DIR}/.m2/ 
-    cache:
-      paths:
-        - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимостей бэкенда
+      - ${CI_PROJECT_DIR}/.m2/repository 
+
 
 
 sonarqube-backend-sast:
