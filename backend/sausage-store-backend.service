@@ -6,6 +6,7 @@ User=jarservice
 Environment="LOGGING_LEVEL_ROOT=DEBUG"
 Environment=REPORT_PATH=/logs/reports
 Environment=LOG_PATH=/logs
+EnvironmentFile=/home/jarservice/vars
 StandardOutput=file:/opt/log/sausage-store-backend.log
 Restart=always
 ExecStart=/usr/bin/java \
