@@ -16,7 +16,6 @@ sudo echo MONGO_USER=${MONGO_USER} >> /vars/jarservice/vars
 sudo echo MONGO_PASSWORD=${MONGO_PASSWORD} >> /home/jarservice/vars
 sudo echo MONGO_HOST=${MONGO_HOST} >> /home/jarservice/vars
 sudo echo MONGO_DATABASE=${MONGO_DATABASE} >> /home/jarservice/vars
-#Обновляем конфиг systemd с помощью рестарта
 sudo systemctl daemon-reload
 #Перезапускаем сервис сосисочной
 sudo systemctl restart sausage-store-backend 
