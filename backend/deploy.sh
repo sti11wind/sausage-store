@@ -1,7 +1,7 @@
 #! /bin/bash
 #Если свалится одна из команд, рухнет и весь скрипт
 set -xe
-export  PSQL_HOST=${PSQL_HOST} && echo $PSQL_HOST  >> /home/jarservice/vars
+echo PSQL_HOST=${PSQL_HOST} >> /home/jarservice/vars
 echo PSQL_PORT=${PSQL_PORT} >> /home/jarservice/vars
 echo PSQL_DBNAME=${PSQL_DBNAME} >> /home/jarservice/vars
 echo PSQL_USER=${PSQL_USER} >> /home/jarservice/vars
