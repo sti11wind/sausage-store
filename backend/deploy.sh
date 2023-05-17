@@ -1,7 +1,7 @@
 #! /bin/bash
 #Если свалится одна из команд, рухнет и весь скрипт
 set -xe
-#Перезаливаем дескриптор сервиса на ВМ для деплоя
+#Перезаливаем дескриптор сервиса на ВМ для  деплоя 
 sudo cp -rf sausage-store-backend.service /etc/systemd/system/sausage-store-backend.service
 sudo rm -f /var/jarservice/sausage-store.jar||true
 #Переносим артефакт в нужную папку
