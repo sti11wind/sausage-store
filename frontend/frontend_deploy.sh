@@ -4,7 +4,7 @@ cat > .env <<EOF
 
 EOF
 
-docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+docker login -u $CI_REGISTRY_USER -p $PAT_FE $CI_REGISTRY
 docker network create -d bridge sausage_network || true
 docker pull gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-frontend:latest
 docker stop frontend || true
