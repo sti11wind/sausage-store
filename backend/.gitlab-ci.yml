@@ -99,7 +99,7 @@ deploy:
        export "CI_REGISTRY_USER=${CI_REGISTRY_USER}";
        export "CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
        export "CI_REGISTRY=${CI_REGISTRY}";
-      export "CI_JOB_TOKEN=${CI_JOB_TOKEN}";
+       export "CI_JOB_TOKEN=${CI_JOB_TOKEN}";
       /bin/bash -s " < ./backend/backend_deploy.sh 
 
   environment:
