@@ -47,7 +47,7 @@ build:
       --tag $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
       .
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY 
-      - docker push $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
 
 
 sonarqube-backend-sast:
