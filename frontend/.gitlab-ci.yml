@@ -31,7 +31,6 @@ build-frontend-code-job:
     # переменные CI_REGISTRY_USER, CI_REGISTRY_PASSWORD, CI_REGISTRY генерятся Гитлабом, их задавать не надо
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
   script:
-    - cp -r sausage-store-${VERSION}/public_html frontend/
     - cd frontend
     - >
       docker build
