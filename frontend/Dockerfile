@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:16.15.0-alpine
 # Create app directory
 WORKDIR /usr/src/app
 COPY . .
