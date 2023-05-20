@@ -1,9 +1,7 @@
-FROM node:16.15.0-alpine
+FROM node:14.17.3-slim
 # Create app directory
 WORKDIR /usr/src/app
 COPY . .
-RUN npm install
-RUN npm install -g http-server
-RUN npm run build
+RUN npm install && npm install -g http-server
 EXPOSE 80
-ENTRYPOINT ["http-server", "dist/frontend/", "-p", "80", "--proxy", "http://sausage-backend:8080"]
+ENTRYPOINT ["http-server", "./public_html/", "-p", "80", "--proxy", "http://backend:8080"]
