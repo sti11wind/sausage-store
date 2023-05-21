@@ -3,7 +3,7 @@ FROM node:8 as node
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install 
-npm run build
+RUN npm build
 
 FROM node:16-alpine
 WORKDIR /usr/src/app
