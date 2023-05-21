@@ -51,6 +51,8 @@ build:
     - docker push $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
 
 
+
+
 sonarqube-backend-sast:
   stage: sonar
   image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в  будущем
@@ -99,12 +101,10 @@ deploy:
        export "SPRING_DATASOURCE_USERNAME=${PSQL_USER}";
        export "SPRING_DATASOURCE_PASSWORD=${PSQL_PASSWORD}";
        export "SPRING_DATA_MONGODB_URI=${MONGO_DATA}";
+       export "CI_PROJECT_NAMESPACE=${CI_PROJECT_NAMESPACE}";
        export "CI_REGISTRY_USER=${CI_REGISTRY_USER}";
        export "CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
        export "CI_REGISTRY=${CI_REGISTRY}";
-       export "CI_JOB_TOKEN=${CI_JOB_TOKEN}";
-       export "MY_DOCKER_USER=$MY_DOCKER_USER";
-       export "MY_DOCKER_PASS=$MY_DOCKER_PASS";
       /bin/bash -s " < ./backend/backend_deploy.sh 
   needs:
     - release
