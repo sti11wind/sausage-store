@@ -15,7 +15,7 @@ docker rm backend || true
 set -e
 docker run -d --name backend \
     --network=sausage_network \
-    --restart always \
+    --restart no \
     --pull always \
     --env-file .env \
     ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/sausage-store/sausage-backend:latest
