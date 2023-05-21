@@ -1,5 +1,5 @@
-#!/bin/sh
 docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+#!/bin/sh
 set +e
 cat > .env <<EOF
 EOF
