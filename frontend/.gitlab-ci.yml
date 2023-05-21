@@ -76,6 +76,9 @@ release:
 
 
 deploy:
+  variables:
+    CI_DEBUG_TRACE: "true"
+    VERSION: 1.0.${CI_PIPELINE_ID}
   stage: deploy
   image: alpine:3.15.0
   # если хотим сделать деплой по кнопке
@@ -93,16 +96,12 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - echo "$CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA"
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";
-       export "CI_PROJECT_NAMESPACE=$CI_PROJECT_NAMESPACE";
-       export "REGISTRY_IMAGE=$CI_REGISTRY_IMAGE";
-       export "MY_DOCKER_USER=$MY_DOCKER_USER";
-       export "MY_DOCKER_PASS=$MY_DOCKER_PASS";
-       export "REGISTRY_USER=$CI_REGISTRY_USER";
-       export "REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
-       export "REGISTRY=$CI_REGISTRY";
+       export "CI_PROJECT_NAMESPACE=${CI_PROJECT_NAMESPACE}";
+       export "REGISTRY_USER=${CI_REGISTRY_USER}";
+       export "REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
+       export "REGISTRY=${CI_REGISTRY}";
        setsid /bin/bash -s " < ./frontend/frontend_deploy.sh 
   needs:
     - release
