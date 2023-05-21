@@ -1,4 +1,4 @@
-FROM node:8 AS builder
+FROM node:8 as builder
 # Create app directory
 WORKDIR /usr/src/app
 COPY . .
