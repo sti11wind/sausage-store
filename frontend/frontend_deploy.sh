@@ -12,6 +12,3 @@ sudo docker run -d --name frontend \
     --env-file .env \
     -p 80:80 \
     ${CI_REGISTRY_IMAGE}/sausage-frontend:latest
-
-
-MY_DOCKER_PASS
