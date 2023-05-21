@@ -98,6 +98,7 @@ deploy:
        export "CI_JOB_TOKEN=${CI_JOB_TOKEN}";
        export "CI_DEPLOY_USER=$CI_DEPLOY_USER}"; 
        export "CI_DEPLOY_PASSWORD=$CI_DEPLOY_PASSWORD}";
+       export "CI_REGISTRY_IMAGE=$CI_REGISTRY_IMAGE}";
       /bin/bash -s " < ./frontend/frontend_deploy.sh 
 
 
