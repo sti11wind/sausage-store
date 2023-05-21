@@ -30,15 +30,16 @@ build-frontend-code-job:
     - until docker info; do sleep 1; done
     # переменные CI_REGISTRY_USER, CI_REGISTRY_PASSWORD, CI_REGISTRY генерятся Гитлабом, их задавать не надо
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
-  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:        
     - cd frontend
     - >
       docker build
       --build-arg VERSION=$VERSION
-      --tag $CI_REGISTRY_IMAGE/sausage-frontend:$VERSION
+      --tag $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
       .
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE/sausage-frontend:$VERSION
+    - docker push $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
+
 
 
 sonarqube:
@@ -65,10 +66,11 @@ release:
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY_IMAGE/sausage-frontend:$VERSION
+    - docker pull $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
     # если образ прошел проверки в CI (сканирование, тесты и т.д), то тегаем latest
-    - docker tag $CI_REGISTRY_IMAGE/sausage-frontend:$VERSION $CI_REGISTRY_IMAGE/sausage-frontend:latest
+    - docker tag $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE/sausage-frontend:latest
     - docker push $CI_REGISTRY_IMAGE/sausage-frontend:latest
+
 
 
 
