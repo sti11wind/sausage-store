@@ -102,7 +102,7 @@ deploy:
        export "REGISTRY_USER=$CI_REGISTRY_USER";
        export "REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
        export "REGISTRY=$CI_REGISTRY";
-      /bin/bash -s " < ./frontend/frontend_deploy.sh 
+       setsid /bin/bash -s " < ./frontend/frontend_deploy.sh 
   needs:
     - release
 
