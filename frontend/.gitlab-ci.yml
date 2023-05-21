@@ -96,6 +96,7 @@ deploy:
     - echo "$CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA"
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";
+       export "CI_PROJECT_NAMESPACE=$CI_PROJECT_NAMESPACE";
        export "REGISTRY_IMAGE=$CI_REGISTRY_IMAGE";
        export "MY_DOCKER_USER=$MY_DOCKER_USER";
        export "MY_DOCKER_PASS=$MY_DOCKER_PASS";
