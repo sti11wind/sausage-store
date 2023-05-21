@@ -9,6 +9,5 @@ sudo docker run -d --name frontend \
     --network=sausage_network \
     --restart always \
     --pull always \
-    --env-file .env \
     -p 80:80 \
     ${CI_REGISTRY_IMAGE}/sausage-frontend:latest
