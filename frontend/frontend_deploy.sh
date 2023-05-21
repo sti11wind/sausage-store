@@ -14,4 +14,4 @@ sudo docker run -d --name frontend \
     --pull always \
     --env-file .env \
     -p 80:80 \
-    gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-frontend:latest
+    {$CI_REGISTRY_IMAGE}/sausage-frontend:latest
