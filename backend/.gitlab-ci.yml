@@ -73,11 +73,10 @@ release:
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
+    - docker pull $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
     # если образ прошел проверки в CI (сканирование, тесты и т.д), то тегаем latest
-    - docker tag $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE/sausage-frontend:latest
-    - docker push $CI_REGISTRY_IMAGE/sausage-frontend:latest
-
+    - docker tag $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE/sausage-backend:latest
+    - docker push $CI_REGISTRY_IMAGE/sausage-backend:latest
 
 
 
