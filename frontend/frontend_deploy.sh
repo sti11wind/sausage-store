@@ -5,7 +5,7 @@ docker network create -d bridge sausage_network || true
 docker pull ${CI_REGISTRY_IMAGE}/sausage-frontend:latest
 docker stop frontend || true
 docker rm frontend || true
-sudo docker run -d --name frontend \
+docker run -d --name frontend \
     --network=sausage_network \
     --restart always \
     --pull always \
