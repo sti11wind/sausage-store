@@ -9,7 +9,7 @@ RUN npm run build
 FROM node:16-alpine
 WORKDIR /usr/src/app
 RUN npm install -g http-server
-COPY --from=builder /usr/src/app/dist/frontend ./fontend/
+COPY --from=builder /usr/src/app/dist/frontend ./frontend/
 COPY --from=builder /usr/src/app/dist/*.json ./
 RUN ls -lsa
 EXPOSE 80
