@@ -85,7 +85,7 @@ deploy:
   # rules:
   #   - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   #     when: manual
-  #   - if: '$CI_COMMIT_BRANCH == "master"'
+  #   - if:  '$CI_COMMIT_BRANCH == "master"'
   #     when: manual
   before_script:
     - apk add openssh-client bash
