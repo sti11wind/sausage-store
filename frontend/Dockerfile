@@ -1,9 +1,10 @@
 FROM node:8 as builder
 # Create app directory
 WORKDIR /usr/src/app
+COPY . .
 RUN npm install
 RUN npm run build
-COPY . .
+
 
 FROM node:16-alpine
 WORKDIR /usr/src/app
