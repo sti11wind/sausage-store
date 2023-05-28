@@ -104,6 +104,7 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=sausage-store jwt=$CI_JOB_JWT)"
+    - export VAULT_ADDR=${VAULT_ADDR}
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";
        export "SPRING_DATASOURCE_URL=jdbc:postgresql://${PSQL_HOST}:${PSQL_PORT}/${PSQL_DBNAME}";
