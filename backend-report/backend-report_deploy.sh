@@ -6,6 +6,7 @@ PORT=8080
 VAULT_ADDR=${VAULT_ADDR}
 SSL_CERT_FILE=YandexInternalRootCA.pem
 EOF
+curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt
 docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 docker network create -d bridge sausage_network || true
 docker pull ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/sausage-store/sausage-backend-report:latest 
