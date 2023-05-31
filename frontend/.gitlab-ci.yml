@@ -4,15 +4,15 @@ variables:
 
 stages:
    - build
-   #- test
-   #- sonar
+   - test
+   - sonar
    - release
    - deploy
 
 
   
 include:
-  #- template: Security/SAST.gitlab-ci.yml 
+  - template: Security/SAST.gitlab-ci.yml 
   - project: 'templates/ci'
     file: 'DockerInDockerTemplate.yml'
 
@@ -44,6 +44,7 @@ build-frontend-code-job:
 
 sonarqube:
   stage: sonar
+    when: manual
   image: sonarsource/sonar-scanner-cli
   script:
     - cd frontend
