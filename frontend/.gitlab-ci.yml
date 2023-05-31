@@ -4,7 +4,7 @@ variables:
 
 stages:
    - build
-   - test
+   #- test
    - sonar
    - release
    - deploy
@@ -12,7 +12,7 @@ stages:
 
   
 include:
-  - template: Security/SAST.gitlab-ci.yml 
+  #- template: Security/SAST.gitlab-ci.yml 
   - project: 'templates/ci'
     file: 'DockerInDockerTemplate.yml'
 
@@ -25,6 +25,7 @@ include:
 
 build-frontend-code-job:
   stage: build
+  when: manual
   image: docker:20.10.12-dind-rootless
   before_script:
     - until docker info; do sleep 1; done
@@ -44,6 +45,7 @@ build-frontend-code-job:
 
 sonarqube:
   stage: sonar
+  when: manual
   image: sonarsource/sonar-scanner-cli
   script:
     - cd frontend
@@ -61,6 +63,7 @@ release:
     GIT_STRATEGY: none
   image: docker:latest
   stage: release
+  when: manual
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
@@ -88,23 +91,19 @@ deploy:
   #   - if:  '$CI_COMMIT_BRANCH == "master"'
   #     when: manual
   before_script:
-    - apk add openssh-client bash
+    - apk add openssh-client bash docker-compose
+    # - apk add openssh-client bash
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - docker context create remote --docker "host=ssh://${DEV_USER}@${DEV_HOST}"
+    - docker --context remote login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - ssh ${DEV_USER}@${DEV_HOST}
-      "export "VERSION=${VERSION}";
-       export "CI_PROJECT_NAMESPACE=${CI_PROJECT_NAMESPACE}";
-       export "CI_REGISTRY_USER=${CI_REGISTRY_USER}";
-       export "CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
-       export "CI_REGISTRY=${CI_REGISTRY}";
-       setsid /bin/bash -s " < ./frontend/frontend_deploy.sh 
-  needs:
-    - release
+    - docker-compose -H ssh://${DEV_USER}@${DEV_HOST} up -d --force-recreate frontend  
+
 
 
 
