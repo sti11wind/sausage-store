@@ -25,7 +25,6 @@ include:
 
 build-frontend-code-job:
   stage: build
-  when: manual
   image: docker:20.10.12-dind-rootless
   before_script:
     - until docker info; do sleep 1; done
@@ -63,7 +62,6 @@ release:
     GIT_STRATEGY: none
   image: docker:latest
   stage: release
-  when: manual
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
