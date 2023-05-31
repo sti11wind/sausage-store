@@ -101,13 +101,14 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=sausage-store jwt=$CI_JOB_JWT)"
-    - export VAULT_ADDR=${VAULT_ADDR}
+    - export VAULT_ADDR="${VAULT_ADDR}"
     - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";  
-       export "REGISTRY_USER=$CI_REGISTRY_USER";
-       export "REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
-       export "REGISTRY=$CI_REGISTRY";
+       export "CI_PROJECT_NAMESPACE=${CI_PROJECT_NAMESPACE}";
+       export "CI_REGISTRY_USER=${CI_REGISTRY_USER}";
+       export "CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
+       export "CI_REGISTRY=${CI_REGISTRY}";
       /bin/bash -s " < ./backend-report/backend-report_deploy.sh 
 
 
