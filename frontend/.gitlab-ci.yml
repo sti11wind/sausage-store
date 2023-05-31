@@ -94,7 +94,7 @@ deploy:
        export "CI_REGISTRY_USER=${CI_REGISTRY_USER}";
        export "CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
        export "CI_REGISTRY=${CI_REGISTRY}";
-      /bin/bash -s " < ./backend/backend_deploy.sh 
+      /bin/bash -s " < ./frontend/frontend_deploy.sh 
   needs:
     - release
 
