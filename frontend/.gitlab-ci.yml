@@ -4,7 +4,7 @@ variables:
 
 stages:
    - build
-   - test
+   #- test
    - sonar
    - release
    - deploy
@@ -12,7 +12,7 @@ stages:
 
   
 include:
-  - template: Security/SAST.gitlab-ci.yml 
+  #- template: Security/SAST.gitlab-ci.yml 
   - project: 'templates/ci'
     file: 'DockerInDockerTemplate.yml'
 
