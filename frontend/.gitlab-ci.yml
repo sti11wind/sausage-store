@@ -108,7 +108,7 @@ deploy:
        export "REGISTRY_USER=$CI_REGISTRY_USER";
        export "REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
        export "REGISTRY=$CI_REGISTRY";
-      /bin/bash -s " < ./backend-report/backend_deploy.sh 
+      /bin/bash -s " < ./backend-report/backend-report_deploy.sh 
 
 
 
