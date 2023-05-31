@@ -25,7 +25,6 @@ include:
 
 build-frontend-code-job:
   stage: build
-  when: manual
   image: docker:20.10.12-dind-rootless
   before_script:
     - until docker info; do sleep 1; done
@@ -63,7 +62,6 @@ release:
     GIT_STRATEGY: none
   image: docker:latest
   stage: release
-  when: manual
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
@@ -99,6 +97,7 @@ deploy:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - docker --context remote login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker --context remote login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker-compose -H ssh://${DEV_USER}@${DEV_HOST} up -d --force-recreate frontend  
