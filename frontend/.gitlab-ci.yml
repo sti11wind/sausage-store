@@ -44,7 +44,7 @@ build-frontend-code-job:
 
 sonarqube:
   stage: sonar
-    when: manual
+  when: manual
   image: sonarsource/sonar-scanner-cli
   script:
     - cd frontend
