@@ -91,10 +91,24 @@ deploy:
   #   - if:  '$CI_COMMIT_BRANCH == "master"'
   #     when: manual
   before_script:
-    - docker --context remote login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    #- 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - apk add openssh-client bash
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
-    -  docker-compose --context std -f docker-compose.yml up --no-deps --detach --pull always --force-recreate frontend
-
+    - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=sausage-store jwt=$CI_JOB_JWT)"
+    - export VAULT_ADDR=${VAULT_ADDR}
+    - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml
+    - ssh ${DEV_USER}@${DEV_HOST}
+      "export "VERSION=${VERSION}";  
+       export "REGISTRY_USER=$CI_REGISTRY_USER";
+       export "REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
+       export "REGISTRY=$CI_REGISTRY";
+      /bin/bash -s " < ./backend-report/backend_deploy.sh 
 
 
 
