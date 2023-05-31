@@ -88,6 +88,8 @@ deploy:
   #   - if:  '$CI_COMMIT_BRANCH == "master"'
   #     when: manual
   before_script:
+    - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - apk add openssh-client bash
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
@@ -96,15 +98,8 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh ${DEV_USER}@${DEV_HOST}
-      "export "VERSION=${VERSION}";
-       export "CI_PROJECT_NAMESPACE=${CI_PROJECT_NAMESPACE}";
-       export "CI_REGISTRY_USER=${CI_REGISTRY_USER}";
-       export "CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
-       export "CI_REGISTRY=${CI_REGISTRY}";
-       setsid /bin/bash -s " < ./frontend/frontend_deploy.sh 
-  needs:
-    - release
+    - docker-compose -H ssh://${DEV_USER}@${DEV_HOST} up -d --force-recreate frontend 
+
 
 
 
