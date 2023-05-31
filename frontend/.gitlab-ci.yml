@@ -25,6 +25,7 @@ include:
 
 build-frontend-code-job:
   stage: build
+  when: manual
   image: docker:20.10.12-dind-rootless
   before_script:
     - until docker info; do sleep 1; done
@@ -62,6 +63,7 @@ release:
     GIT_STRATEGY: none
   image: docker:latest
   stage: release
+  when: manual
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
@@ -78,7 +80,6 @@ release:
 
 deploy:
   variables:
-    CI_DEBUG_TRACE: "true"
     VERSION: 1.0.${CI_PIPELINE_ID}
   stage: deploy
   image: alpine:3.15.0
@@ -89,8 +90,8 @@ deploy:
   #   - if:  '$CI_COMMIT_BRANCH == "master"'
   #     when: manual
   before_script:
+    - apk add openssh-client bash docker-compose
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - apk add openssh-client bash
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
@@ -98,8 +99,11 @@ deploy:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - docker context create remote --docker "host=ssh://${DEV_USER}@${DEV_HOST}"
+    - docker --context remote login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker-compose -H ssh://${DEV_USER}@${DEV_HOST} up -d --force-recreate frontend 
+
 
 
 
