@@ -30,7 +30,7 @@ services:
       - sausage-store
       
   frontend:
-    image:  ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/sausage-store/sausage-frontend:latest
+    image:  gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-frontend:latest
     container_name: frontend
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
