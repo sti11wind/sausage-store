@@ -102,7 +102,14 @@ deploy:
     - docker context create remote --docker "host=ssh://${DEV_USER}@${DEV_HOST}"
     - docker --context remote login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker-compose -H ssh://${DEV_USER}@${DEV_HOST} up -d --force-recreate frontend  
+    - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml
+    - ssh ${DEV_USER}@${DEV_HOST}
+      "export "VERSION=${VERSION}";  
+       export "REGISTRY_USER=$CI_REGISTRY_USER";
+       export "REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
+       export "REGISTRY=$CI_REGISTRY";
+      /bin/bash -s " < ./frontend-report/frontend_deploy.sh 
+
 
 
 
