@@ -30,7 +30,7 @@ services:
       - sausage-store
       
   frontend:
-    image:  gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-frontend:latest
+    image:  ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/sausage-store/sausage-frontend:latest
     container_name: frontend
     restart: always 
     ports:
