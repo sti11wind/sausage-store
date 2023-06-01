@@ -32,6 +32,8 @@ services:
   frontend:
     image:  ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/sausage-store/sausage-frontend:latest
     container_name: frontend
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always 
     ports:
       - "80:80"
