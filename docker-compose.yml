@@ -1,8 +1,10 @@
 version: "3.9"
 services:
   backend:
-    image:  ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/sausage-store/sausage-backend:latest
+    image:  gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-backend:latest
     container_name: backend
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always 
     environment:
       SPRING_FLYWAY_BASELINE-ON-MIGRATE: "false"
@@ -18,8 +20,10 @@ services:
       - sausage-store
 
   backend-report:
-    image:  ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/sausage-store/sausage-backend-report:latest
+    image:  gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-backend-report:latest
     container_name: backend-report
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always 
     environment:
       DB: ${SPRING_DATA_MONGODB_URI}
