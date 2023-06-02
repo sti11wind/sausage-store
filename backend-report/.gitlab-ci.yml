@@ -71,7 +71,7 @@ deploy:
   stage: deploy
   image: vault:1.11.3
   before_script:
-    - apk add openssh-client bash
+    - apk add openssh-client bash docker-compose
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
@@ -81,6 +81,7 @@ deploy:
   script:
     - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=sausage-store jwt=$CI_JOB_JWT)"
     - export VAULT_ADDR="${VAULT_ADDR}"
+    - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";
        export "VAULT_ADDR=${VAULT_ADDR}";
@@ -92,6 +93,11 @@ deploy:
       /bin/bash -s " < ./backend-report/backend-report_deploy.sh 
   needs:
     - release
+
+
+
+
+
 
 
   environment:
