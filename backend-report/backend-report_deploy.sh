@@ -1,6 +1,6 @@
 #!/bin/bash
 set +e
-cat > .env <<EOF
+cat > .env_report <<EOF
 DB=${SPRING_DATA_MONGODB_URI}
 PORT=8080
 VAULT_ADDR=${VAULT_ADDR}
