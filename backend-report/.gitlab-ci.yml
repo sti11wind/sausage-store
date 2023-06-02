@@ -54,13 +54,11 @@ sonarqube-backend-sast:
   script:
     - cd backend-report
     - >
-      sonar-scanner \
+    sonar-scanner \
       -Dsonar.projectKey=${SONAR_R_PROJECT_KEY} \
       -Dsonar.sources=. \
-      -Dsonar.host.url=${SONAR_HOST_URL}
+      -Dsonar.host.url=${SONAR_HOST_URL} \
       -Dsonar.login=${SONAR_R_LOGIN} 
-
-
 
 
 
