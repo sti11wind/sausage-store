@@ -4,6 +4,8 @@ variables:
 include:
   - project: 'templates/ci'
     file: 'DockerInDockerTemplate.yml'
+    remote: 'https://gitlab.com/gitlab-org/gitlab/-/raw/2851f4d5/lib/gitlab/ci/templates/Jobs/SAST.latest.gitlab-ci.yml'
+
 
 
 
