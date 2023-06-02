@@ -54,7 +54,7 @@ sonarqube-backend-sast:
   script:
     - cd backend-report
     - >
-      sonar-scaner \
+      sonar-scanner \
       -Dsonar.projectKey=${SONAR_R_PROJECT_KEY} \
       -Dsonar.sources=. \
       -Dsonar.host.url=${SONAR_HOST_URL}
