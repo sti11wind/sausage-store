@@ -23,6 +23,15 @@ include:
 
 
 
+spotbugs-sast:
+  variables:
+    CI_DEBUG_TRACE: "true"
+  stage: test
+  variables:
+    COMPILE: "false"
+    SAST_JAVA_VERSION: 16
+    BACKEND_BUILD_DIR: ${CI_PROJECT_DIR}/backend/target
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository 
 
 
 
@@ -45,6 +54,22 @@ build:
       --tag $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
       .
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+
+
+
+sonarqube-backend-sast:
+  stage: sonar
+  image: sonarsource/sonar-scanner-cli # тот самый docker-образ, о котором мы все узнаем в  будущем
+  script:
+    - cd backend-report
+    - >
+      sonar-scaner 
+      -Dsonar.projectKey=${SONAR_R_PROJECT_KEY}
+      -Dsonar.host.url=${SONAR_HOST_URL}
+      -Dsonar.login=${SONAR_R_LOGIN} 
+      -Dsonar.projectname=14_SERGEYKLIMACHEV_REPORT
+
+
 
 
 
