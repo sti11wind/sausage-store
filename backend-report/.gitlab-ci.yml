@@ -54,11 +54,11 @@ sonarqube-backend-sast:
   script:
     - cd backend-report
     - >
-    sonar-scanner \
-      -Dsonar.projectKey=4QTanS5_wpcGZsKjc_eN \
-      -Dsonar.sources=. \
-      -Dsonar.host.url=https://sonarqube.praktikum-services.ru \
-      -Dsonar.login=e0e23390caad943f7d94474ad5a6afa432eae4fd
+      sonar-scanner \
+        -Dsonar.projectKey=4QTanS5_wpcGZsKjc_eN \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=https://sonarqube.praktikum-services.ru \
+        -Dsonar.login=e0e23390caad943f7d94474ad5a6afa432eae4fd
 
 
 
