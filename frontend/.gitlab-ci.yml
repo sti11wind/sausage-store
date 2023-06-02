@@ -108,6 +108,10 @@ deploy:
        export "REGISTRY=$CI_REGISTRY";
       /bin/bash -s " < ./frontend/frontend_deploy.sh 
 
+  environment:
+    name: staging
+    url: http://std-014-65.praktikum-services.tech/
+
 
 
 
