@@ -16,10 +16,24 @@ include:
 
 stages:
   - build
-  - sonar
   - test
+  - sonar
   - release
   - deploy
+
+
+semgrep-sast:
+  extends: .sast-analyzer
+  image:
+    name: test
+
+
+
+
+
+
+
+
 
 
 
@@ -47,7 +61,7 @@ build:
 
 
 
-sonarqube-backend-report-sast:
+sonarqube-backend-sast:
   stage: sonar
   image: sonarsource/sonar-scanner-cli # тот самый docker-образ, о котором мы все узнаем в  будущем
   script:
