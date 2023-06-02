@@ -12,14 +12,13 @@ include:
 stages:
   - build
   - test
+  - sonar
   - release
   - deploy
 
 
 
-include:
-  - project: 'templates/ci'
-    file: 'DockerInDockerTemplate.yml'
+
 
 
 
