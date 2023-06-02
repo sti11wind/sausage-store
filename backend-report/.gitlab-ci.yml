@@ -5,7 +5,7 @@ include:
   - project: 'templates/ci'
     file: 'DockerInDockerTemplate.yml'
   - template: Security/SAST.gitlab-ci.yml 
-    remote: 'https://gitlab.com/gitlab-org/gitlab/-/raw/2851f4d5/lib/gitlab/ci/templates/Jobs/SAST.latest.gitlab-ci.yml'
+
 
 
 
@@ -20,20 +20,6 @@ stages:
   - test
   - release
   - deploy
-
-
-semgrep-sast:
-  extends: .sast-analyzer
-  image:
-    name: test
-
-
-
-
-
-
-
-
 
 
 
