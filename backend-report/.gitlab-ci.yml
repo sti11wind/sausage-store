@@ -23,13 +23,7 @@ semgrep-sast:
   extends: .sast-analyzer
   image:
     name: test
-  variables:
-    SERACH_MAX_DEPTH: 3
-    SAST_ANALYZER_IMAGE_TAG: 3
-    SAST_ANALYZER_IMAGE: "$SECURE_ANALYZERS_PREFIX/semgrep:$SAST_ANALYZER_IMAGE_TAG$SAST_IMAGE_SUFFIX"
-  rules:
-      exists:
-        - '**/*.py'
+
 
 
 
