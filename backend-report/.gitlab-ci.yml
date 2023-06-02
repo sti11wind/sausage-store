@@ -47,7 +47,7 @@ build:
 
 
 
-sonarqube-backend-sast:
+sonarqube-backend-report-sast:
   stage: sonar
   image: sonarsource/sonar-scanner-cli # тот самый docker-образ, о котором мы все узнаем в  будущем
   script:
