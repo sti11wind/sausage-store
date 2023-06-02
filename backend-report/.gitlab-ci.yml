@@ -55,10 +55,11 @@ sonarqube-backend-sast:
     - cd backend-report
     - >
     sonar-scanner \
-      -Dsonar.projectKey=${SONAR_R_PROJECT_KEY} \
+      -Dsonar.projectKey=4QTanS5_wpcGZsKjc_eN \
       -Dsonar.sources=. \
-      -Dsonar.host.url=${SONAR_HOST_URL} \
-      -Dsonar.login=${SONAR_R_LOGIN} 
+      -Dsonar.host.url=https://sonarqube.praktikum-services.ru \
+      -Dsonar.login=e0e23390caad943f7d94474ad5a6afa432eae4fd
+
 
 
 
