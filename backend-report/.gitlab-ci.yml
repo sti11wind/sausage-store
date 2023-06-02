@@ -22,16 +22,6 @@ stages:
   - deploy
 
 
-semgrep-sast:
-  extends: .sast-analyzer
-  image:
-    name: test
-
-
-
-
-
-
 
 
 
