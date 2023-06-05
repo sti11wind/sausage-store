@@ -15,8 +15,6 @@ services:
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       VAULT_ADDR: ${VAULT_ADDR}
-    env_file:
-      - .env_back
     networks:
       - sausage-store
 
@@ -30,8 +28,6 @@ services:
       DB: ${SPRING_DATA_MONGODB_URI}
       PORT: 8080
       VAULT_ADDR: ${VAULT_ADDR}
-    env_file:
-      - .env_report
     networks:
       - sausage-store
       
