@@ -1,4 +1,4 @@
-FROM alpine3.17
+FROM python:3.9-slim
 COPY app /app
 WORKDIR /app
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt
