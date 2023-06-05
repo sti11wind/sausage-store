@@ -1,5 +1,5 @@
 FROM python:latest
-ADD app /app
+COPY app /app
 WORKDIR /app
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt
 RUN pip install -r requirements.txt
