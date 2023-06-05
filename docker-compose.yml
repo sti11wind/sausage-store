@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  backend:
+    image:  gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-backend:latest
+    container_name: backend
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always 
+    environment:
+      SPRING_FLYWAY_BASELINE-ON-MIGRATE: "false"
+      SPRING_FLYWAY_ENABLED: "false"
+      REPORT_PATH: /opt/log
+      LOG_PATH: /opt/log
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      VAULT_ADDR: ${VAULT_ADDR}
+    networks:
+      - sausage-store
+
+  backend-report:
+    image:  gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-backend-report:latest
+    container_name: backend-report
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always 
+    environment:
+      DB: ${SPRING_DATA_MONGODB_URI}
+      PORT: 8080
+      VAULT_ADDR: ${VAULT_ADDR}
+    networks:
+      - sausage-store
+      
+  frontend:
+    image:  gitlab.praktikum-services.ru:5050/std-014-65/sausage-store/sausage-frontend:latest
+    container_name: frontend
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always 
+    ports:
+      - "80:80"
+    networks:
+      - sausage-store
+
+networks:
+  sausage-store:
+    ipam:
+      driver: default
