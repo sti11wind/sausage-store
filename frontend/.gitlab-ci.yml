@@ -94,9 +94,9 @@ deploy:
     - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";  
-       export "REGISTRY_USER=$CI_REGISTRY_USER";
-       export "REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
-       export "REGISTRY=$CI_REGISTRY";
+       export "CI_REGISTRY_USER=$CI_REGISTRY_USER";
+       export "CI_REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD";
+       export "CI_REGISTRY=$CI_REGISTRY";
       /bin/bash -s " < ./frontend/frontend_deploy.sh 
 
   environment:
@@ -105,10 +105,5 @@ deploy:
 
 
 
-
-
-  environment:
-    name: staging
-    url: http://std-014-65.praktikum-services.tech/
 
 
