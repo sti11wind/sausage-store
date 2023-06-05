@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.12.0b1-alpine
 COPY app /app
 WORKDIR /app
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt
