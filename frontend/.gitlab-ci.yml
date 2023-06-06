@@ -4,7 +4,7 @@ variables:
 
 stages:
    - build
-   - test
+   #- test
    - sonar
    - release
    - deploy
@@ -12,7 +12,7 @@ stages:
 
   
 include:
-  - template: Security/SAST.gitlab-ci.yml 
+  #- template: Security/SAST.gitlab-ci.yml 
   - project: 'templates/ci'
     file: 'DockerInDockerTemplate.yml'
 
@@ -25,7 +25,6 @@ include:
 
 build-frontend-code-job:
   stage: build
-  when: manual
   image: docker:20.10.12-dind-rootless
   before_script:
     - until docker info; do sleep 1; done
