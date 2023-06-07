@@ -38,7 +38,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always 
     environment:
-      DEFAULT_HOST: "backend"
+      VIRTUAL_HOST: "backend"
       VIRTUAL_PORT: "8080"
     ports:
       - "80:80"
