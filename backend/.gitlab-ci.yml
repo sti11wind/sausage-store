@@ -13,7 +13,7 @@ variables:
 stages:
   - build
   - test
-  #- sonar
+  - sonar
   - release
   - deploy
 
