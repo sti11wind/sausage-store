@@ -15,8 +15,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       VAULT_ADDR: ${VAULT_ADDR}
       REPORT_PATH: \logs
-      VIRTUAL_HOST: NG
-      VIRTUAL_PORT: 8080
+      VIRTUAL_HOST:  "backend"
+
 
     networks:
       - sausage-store
@@ -42,7 +42,8 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always 
     environment:
-      DEFAULT_HOST: NG
+      DEFAULT_HOST: "backend"
+      VIRTUAL_PORT: "8080"
     ports:
       - "80:80"
     networks:
