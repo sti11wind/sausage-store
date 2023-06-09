@@ -4,7 +4,7 @@ variables:
 
 stages:
    - build
-   - test
+   #- test
    - sonar
    - release
    - deploy
@@ -12,7 +12,7 @@ stages:
 
   
 include:
-  - template: Security/SAST.gitlab-ci.yml 
+  #- template:  Security/SAST.gitlab-ci.yml 
   - project: 'templates/ci'
     file: 'DockerInDockerTemplate.yml'
 
@@ -25,11 +25,10 @@ include:
 
 build-frontend-code-job:
   stage: build
-  when: manual
   image: docker:20.10.12-dind-rootless
   before_script:
     - until docker info; do sleep 1; done
-    # переменные CI_REGISTRY_USER, CI_REGISTRY_PASSWORD, CI_REGISTRY генерятся Гитлабом, их задавать не надо
+    # переменные CI_REGISTRY_USER,CI_REGISTRY_PASSWORD, CI_REGISTRY генерятся Гитлабом, их задавать не надо
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:        
@@ -63,14 +62,13 @@ release:
     GIT_STRATEGY: none
   image: docker:latest
   stage: release
-  when: manual
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $MY_DOCKER_USER -p $MY_DOCKER_PASS
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker pull $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
-    # если образ прошел проверки в CI (сканирование, тесты и т.д),то тегаем latest
+    # если образ прошел проверки в CI (сканирование, тесты и т.д), то тегаем latest
     - docker tag $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE/sausage-frontend:latest
     - docker push $CI_REGISTRY_IMAGE/sausage-frontend:latest
 

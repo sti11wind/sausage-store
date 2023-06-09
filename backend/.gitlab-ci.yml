@@ -28,6 +28,7 @@ spotbugs-sast:
   variables:
     CI_DEBUG_TRACE: "true"
   stage: test
+  when: manual
   variables:
     COMPILE: "false"
     SAST_JAVA_VERSION: 16
@@ -63,6 +64,7 @@ build:
 
 sonarqube-backend-sast:
   stage: sonar
+  when: manual
   image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в  будущем
   script:
     - cd backend

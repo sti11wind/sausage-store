@@ -9,12 +9,15 @@ services:
     environment:
       SPRING_FLYWAY_BASELINE-ON-MIGRATE: "false"
       SPRING_FLYWAY_ENABLED: "false"
-      REPORT_PATH: /opt/log
       LOG_PATH: /opt/log
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       VAULT_ADDR: ${VAULT_ADDR}
+      REPORT_PATH: \logs
+      VIRTUAL_HOST:  "backend"
+
+
     networks:
       - sausage-store
 
@@ -26,8 +29,9 @@ services:
     restart: always 
     environment:
       DB: ${SPRING_DATA_MONGODB_URI}
-      PORT: 8080
       VAULT_ADDR: ${VAULT_ADDR}
+    ports:
+      - "27018:27018"
     networks:
       - sausage-store
       
@@ -37,6 +41,9 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always 
+    environment:
+      DEFAULT_HOST: "backend"
+      VIRTUAL_PORT: "8080"
     ports:
       - "80:80"
     networks:
