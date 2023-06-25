@@ -14,6 +14,7 @@ RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRoo
 
 # release
 FROM openjdk:16-jdk-alpine
+RUN apk --no-cache add curl
 ARG VERSION=${VERSION}
 WORKDIR /app
 COPY --from=builder /usr/src/app/YandexInternalRootCA.crt .
@@ -25,7 +26,7 @@ RUN keytool -importcert -file YandexInternalRootCA.crt \
     && addgroup --system jaruser \
     && adduser -S -s /bin/false -G jaruser jaruser -D -H \
     && apk add --no-cache dumb-init==1.2.5-r0 \
-    && mkdir -p /opt/log && chown jaruser:jaruser /opt/log
+    && mkdir -p /opt/log && chown jaruser:jaruser /opt/log 
 COPY --chown=jaruser:jaruser \
      --from=builder /usr/src/app/target/sausage-store-${VERSION}.jar ./sausage-store.jar
 EXPOSE 8080
